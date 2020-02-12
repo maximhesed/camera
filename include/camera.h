@@ -1,5 +1,5 @@
 /* This code doesn't have any copyrights and licenses.
- * Restrictions - is dogmas. Be open. */
+ * Restrictions - is dogmas. */
 
 #ifndef __CAMERA_H
 #define __CAMERA_H
@@ -22,32 +22,24 @@
 #define YUV_RAW_LEN (PIX_WIDTH * PIX_HEIGHT * 2)
 #define RGB_RAW_LEN (PIX_WIDTH * PIX_HEIGHT * 3)
 
-struct data {
-    guint tid; /* A timer ID. */
-
-    gint fd;
-    guint8 *storage; /* The frame in the YUV packed format. */
-    struct v4l2_buffer buf[2];
-
-    gulong ss_sid; /* A socket service signal ID. */
-    GSocketService *sservice;
-    struct sockaddr_in servaddr;
-    gchar *addr; /* A remote address. */
-
-    GtkWidget *area;
+struct dev_info {
+    int fd;
+    uint8_t *buffer; /* The frame in the YUV-packed format. */
+    struct v4l2_buffer plane[2];
 };
 
-gint device_open(struct data *d);
-gint caps_print(gint fd);
-gint format_set(gint fd);
-gint buf_req(gint fd);
-gint buf_alloc(struct data *d);
-gint buf_map(struct data *d);
-gint frame_streamon(struct data *d);
-gint frame_capture(struct data *d);
-gint frame_streamoff(struct data *d);
-gint buf_unmap(struct data *d);
-gint device_close(gint fd);
-guint8 * yuv_to_rgb(const guint8 *buffer);
+int       device_open(struct dev_info *dinfo);
+int       device_streamon(struct dev_info *dinfo);
+int       device_streamoff(struct dev_info *dinfo);
+int       device_close(int fd);
+int       caps_print(int fd);
+int       format_set(int fd);
+int       buf_req(int fd);
+int       buf_alloc(struct dev_info *dinfo);
+int       buf_map(struct dev_info *dinfo);
+int       buf_capture(struct dev_info *dinfo);
+int       buf_unmap(struct dev_info *dinfo);
+size_t    buf_get_len(struct dev_info *dinfo);
+uint8_t * yuv_to_rgb(const uint8_t *buffer);
 
 #endif /* __CAMERA_H */
