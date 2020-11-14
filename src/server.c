@@ -1,5 +1,5 @@
 /* This code doesn't have any copyrights and licenses.
- * Restrictions - is dogmas. */
+ * Restrictions are dogmas. */
 
 /* This is server, which sends frames, from the camera, to the network. */
 
@@ -312,8 +312,7 @@ server_prepare(struct data *d)
     }
 
     status = g_socket_listener_add_address((GSocketListener *) d->sservice,
-        gaddr, G_SOCKET_TYPE_STREAM, G_SOCKET_PROTOCOL_TCP, NULL, NULL,
-        &err);
+        gaddr, G_SOCKET_TYPE_STREAM, G_SOCKET_PROTOCOL_TCP, NULL, NULL, &err);
     if (!status) {
         printf("Failed to add the address into the socket listener.\n");
         error_throw(err);

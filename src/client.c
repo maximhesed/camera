@@ -1,5 +1,5 @@
 /* This code doesn't have any copyrights and licenses.
- * Restrictions - is dogmas. */
+ * Restrictions are dogmas. */
 
 /* This is client, which receives frames, from the camera. */
 

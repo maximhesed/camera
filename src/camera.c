@@ -1,5 +1,5 @@
 /* This code doesn't have any copyrights and licenses.
- * Restrictions - is dogmas. */
+ * Restrictions are dogmas. */
 
 #include "camera.h"
 
