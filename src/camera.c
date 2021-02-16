@@ -22,7 +22,6 @@ device_streamon(struct dev_info *dinfo)
     int type;
 
     memset(&dinfo->plane[1], 0, sizeof(dinfo->plane[1]));
-
     dinfo->plane[1].type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     dinfo->plane[1].memory = V4L2_MEMORY_MMAP;
     dinfo->plane[1].index = 0;
@@ -114,7 +113,6 @@ format_set(int fd)
     struct v4l2_format fmt;
 
     memset(&fmt, 0, sizeof(fmt));
-
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
     fmt.fmt.pix.width = PIX_WIDTH;
@@ -139,7 +137,6 @@ buf_req(int fd)
     struct v4l2_requestbuffers rb;
 
     memset(&rb, 0, sizeof(rb));
-
     rb.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     rb.memory = V4L2_MEMORY_MMAP;
     rb.count = 1;
@@ -157,7 +154,6 @@ int
 buf_alloc(struct dev_info *dinfo)
 {
     memset(&dinfo->plane[0], 0, sizeof(dinfo->plane[0]));
-
     dinfo->plane[0].type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     dinfo->plane[0].memory = V4L2_MEMORY_MMAP;
     dinfo->plane[0].index = 0;
@@ -225,11 +221,7 @@ buf_unmap(struct dev_info *dinfo)
 size_t
 buf_get_len(struct dev_info *dinfo)
 {
-    size_t len;
-
-    len = dinfo->plane[1].length;
-
-    return len;
+    return dinfo->plane[1].length;
 }
 
 /* Thank you very much, Redek (https://cutt.ly/2ryV2lz). */
@@ -237,14 +229,8 @@ uint8_t *
 yuv_to_rgb(const uint8_t *buffer)
 {
     uint8_t *rgb_raw = g_malloc0_n(RGB_RAW_LEN, sizeof(uint8_t));
-    int y;
-    int cr;
-    int cb;
-    double r;
-    double g;
-    double b;
-    int i;
-    int j;
+    int y, cr, cb, i, j;
+    double r, g, b;
 
     for (i = 0, j = 0; i < RGB_RAW_LEN; i += 6, j += 4) {
         y = buffer[j];

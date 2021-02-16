@@ -30,7 +30,7 @@ struct data {
 
     struct source *src;
 
-    uint8_t *buf; /* The raw frame. */
+    uint8_t *buf; /* A raw frame. */
     GtkWidget *area;
 
     gboolean is_recv;
@@ -61,12 +61,7 @@ static GSourceFuncs gsf = {
 
 int main(int argc, char *argv[])
 {
-    GtkWidget *window;
-    GtkWidget *area;
-    GtkWidget *btn_rc_start;
-    GtkWidget *btn_rc_stop;
-    GtkWidget *grid;
-
+    GtkWidget *window, *area, *btn_rc_start, *btn_rc_stop, *grid;
     struct data *data = data_alloc();
 
     if (argc != 3) {
@@ -253,7 +248,8 @@ frame_receive(struct data *d)
         error_throw(err);
 
         return RECEIVE_STOP;
-    } else if (bytes == 0) {
+    }
+    else if (bytes == 0) {
         printf("The connection was closed.\n");
 
         return RECEIVE_STOP;

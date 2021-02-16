@@ -82,7 +82,6 @@ int main(int argc, char *argv[])
     GtkWidget *btn_bd_start;
     GtkWidget *btn_bd_stop;
     GtkWidget *grid;
-
     struct box *box = box_alloc();
 
     if (argc != 2) {
@@ -252,7 +251,7 @@ conn_accept(GSocketService *sservice,
     box->d->src = (struct source *) g_source_new(&gsf,
         sizeof(struct source));
 
-    /* Add the connection's fd to the main event loop. */
+    /* Add connection's fd to the main event loop. */
     box->d->src->gpfd[box->d->conn_q + 1] = g_source_add_unix_fd(
         (GSource *) box->d->src,
         g_socket_get_fd(box->d->gsock[box->d->conn_q]), G_IO_OUT);
@@ -296,8 +295,7 @@ server_prepare(struct data *d)
             && servaddr.sin_port == d->servaddr.sin_port)
         /* The address is already listened. So, we don't need to add
          * it to the socket listener again. This is not an error.
-         * We just don't add the address to the listener, but
-         * continue send a data. */
+         * We just don't add the address to the listener. */
 
         return 0;
 
